@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challange5</title>
+    <link rel="stylesheet" href="dist/style.css">
+
+</head>
+
+<body>
+
+    <script>
+
+        ////// ENTERING GLOBAL VARIABLES //////
+
+
+        const maxYearAllowed = 130;
+        const retirementAge = 65;
+
+
+        //////////////////////////////////////////////////////////////////////////////////
+        //////////////////////// FUNCTION FOR DETECTING VALID USER INPUT /////////////////
+        //////////////////////////////////////////////////////////////////////////////////
+
+
+        function isUserInputValid(userInput, userAge, maxYearAllowed) {
+
+            if (userInput === "") {
+                alert("Nic jste nezadali. Zkuste to prosím znovu.");
+                return false;
+
+            } else if (userInput === null) {
+                alert("Bylo zmáčknuto tlačítko zrušit");
+                return false;
+
+            } else if (isNaN(userInput)) {
+                alert(`Vámi zadaný vstup (${userInput}) není bohužel číslo.`);
+                return false;
+
+            } else if (!Number.isInteger(Number(userInput)) || userInput <= 0) {
+                alert(`Vámi zadaný vstup (${userInput}) musí být celé kladné číslo.`);
+                return false;
+
+            } else if (!(/^\d{4}$/.test(userInput))) {
+                alert(`Vámi zadaný rok narození (${userInput}) musí být ve formátu YYYY`);
+                return false;
+
+            } else {
+
+                if (userAge > maxYearAllowed) {
+                    alert(`Je mi líto, ale tak starý (${userAge} let) opravdu být nemůžeš`);
+                    return false;
+
+                } else if (userInput > getCurrentYear()) {
+                    alert(`Bohužel bez stroje času ses nemohl narodit v budoucnosti v roce ${userInput}`);
+                    return false;
+
+                } else {
+                    alert(`Zadaná hodnota (věk: ${userAge} let) je ve správném formátu :)`);
+                    return true;
+                }
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////// FUNCTION TO DETERMINE WHETHER THE USER IS ALREADY RETIRED ///////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        function isUserInPension(userAge, retirementAge) {
+
+            if (userAge >= retirementAge) {
+                alert(`Gratuluji, jste hiž už v důchodu, můžete v klidu odpočívat :)`);
+                return true;
+            } else {
+                alert(`Je mi líto, ale musíš ještě ${retirementAge - userAge} let pracovat`);
+                return false;
+            }
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //////////////////////// GET CURRENT YEAR FUNCTION /////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+        const getCurrentYear = function () {
+            return new Date().getFullYear();
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //////////////////////// DO-WHILE LOOP WRAPED TO FUNCTION //////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+
+        function getUserBirthYear(maxYearAllowed) {
+
+            let userInput;
+            let userAge
+
+            do {
+
+                if (userInput !== undefined) {
+                    alert("Zkuste to prosím znovu a zadejte pravdivě svůj rok narození");
+                }
+
+                userInput = prompt("Zadejte prosím rok svého narození:");
+                userAge = getCurrentYear() - userInput;
+
+            } while (!isUserInputValid(userInput, userAge, maxYearAllowed));
+
+            return userAge
+        }
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        //////////////////////// ALL ABOVE IN ONE PACK FUNCTION ////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+        function evaluatePensionStatus() {
+            const userBirthYear = getUserBirthYear();
+            isUserInPension(userBirthYear, retirementAge);
+        }
+
+
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////// ONLY FOR TESTING isUserInputValid  /////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+
+        // function isUserInputValid(userInput) {
+
+
+        //     if (userInput === "") {
+        //         alert("Nic jste nezadali. Zkuste to prosím znovu.");
+        //         return false;
+
+        //     } else if (userInput === null) {
+        //         alert("Bylo zmáčknuto tlačítko zrušit");
+        //         return false;
+
+        //     } else if (isNaN(userInput)) {
+        //         alert(`Vámi zadaný vstup (${userInput}) není bohužel číslo.`);
+        //         return false;
+
+        //     } else if (!Number.isInteger(userInput) || userInput <= 0) {
+        //         alert(`Vámi zadaný vstup (${userInput}) musí být celé kladné číslo.`);
+        //         return false;
+
+        //     } else if (!(/^\d{4}$/.test(userInput))) {
+        //         alert(`Vámi zadaný rok narození (${userInput}) musí být ve formátu YYYY`);
+        //         return false;
+
+        //     } else {
+
+        //         const maxYearAllowed = 130;
+
+        //         const getCurrentYear = function () {
+        //             return new Date().getFullYear();
+        //         }
+
+        //         const userAge = getCurrentYear() - userInput
+
+
+        //         if (userAge > maxYearAllowed) {
+        //             alert(`Je mi líto, ale tak starý (${userAge} let) opravdu být nemůžeš`);
+        //             return false;
+
+        //         } else if (userInput > getCurrentYear()) {
+        //             alert(`Bohužel bez stroje času ses nemohl narodit v budoucnosti v roce ${userInput}`);
+        //             return false;
+
+        //         } else {
+        //             alert(`Zadaná hodnota je ve správném formátu (vypočítaný věk: ${userAge} let)`);
+        //             return true;
+        //         }
+        //     }
+        // }
+
+
+        // console.log(isUserInputValid(""));           // false
+        // console.log(isUserInputValid(null));         // false
+        // console.log(isUserInputValid("ahoj"));       // false
+        // console.log(isUserInputValid(-123));         // false
+        // console.log(isUserInputValid(1955.123));     // false
+        // console.log(isUserInputValid(20000001));     // false
+        // console.log(isUserInputValid(1700));         // false
+        // console.log(isUserInputValid(2050));         // false
+        // console.log(isUserInputValid(1980));         // true
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+    <div class="container">
+        <!-- !!! REVIEW: Proc zde pouzivas setTimeout()? :) -->
+        <button class="button" onclick="setTimeout(evaluatePensionStatus,401)">Vyhodnoť svůj důchodový status</button>
+    </div>
+
+
+</body>
+
+</html>

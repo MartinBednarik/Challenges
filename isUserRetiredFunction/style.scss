@@ -1,0 +1,68 @@
+///// 1. VARIABLES IMPORT /////
+
+@use "variables";
+@use "mixins";
+
+///// 2. MEDIA SCREEN /////
+
+@media screen and (max-width: 800px){
+    body {
+        background-color:lightgrey;
+    }
+}
+
+///// 3. DIV WITH BUTTON /////
+
+.container {
+    display: inline-block;
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+    padding: 0px;
+}
+
+///// 3.1 BUTTON /////
+
+.button {
+    box-sizing: border-box;
+    position:absolute;
+    width: 25rem;
+    height: 8rem;
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+
+    font-family: Impact;
+    font-size: 20px;
+
+    color: variables.$primary-color;
+    border-color: variables.$primary-color;
+    background-color: rgba(variables.$primary-color,0.0);
+    
+
+    border-width: 5px;
+    border-radius: 10px;
+    margin: 0;
+    
+
+    cursor:pointer;
+
+    ///// 4.1 USED MIXINS /////
+
+    &:hover {
+        @include mixins.hover-color();
+    }
+
+    &:focus {
+        @include mixins.shadow();
+    }
+
+    &:active {
+        @include mixins.active-transform();
+    }
+}
+
+
